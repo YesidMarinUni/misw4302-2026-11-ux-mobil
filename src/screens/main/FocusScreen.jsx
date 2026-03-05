@@ -54,7 +54,6 @@ export default function FocusScreen() {
           </View>
         ) : (
           <View>
-            {/* Toggle card */}
             <View style={{
               backgroundColor: t.colors.surface,
               borderRadius: t.radii.md, padding: 16,
