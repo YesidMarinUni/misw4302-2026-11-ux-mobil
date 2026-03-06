@@ -17,6 +17,11 @@ const ACTION_COLORS = {
   calendar: { bg: '#E3F2FD', accent: '#1E88E5' },
 };
 
+const TRAFFIC_ROUTE_PREVIEW = {
+  status: 'Trafico suave · 25 min via I-95 N',
+  leaveAt: 'Salir a las 8:35 AM para llegar a tiempo',
+};
+
 export default function GoodMorningScreen() {
   const { goHome, briefingEnabled, briefingSources, goodMorningActions, ringingAlarm } = useAlarm();
   const [revealedActions, setRevealedActions] = useState({});
@@ -31,6 +36,73 @@ export default function GoodMorningScreen() {
 
   const toggleAction = (id) => {
     setRevealedActions(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const renderActionDetails = (action, colors) => {
+    if (action.id === 'work_route') {
+      return (
+        <View style={{ backgroundColor: '#DDEADB', borderTopWidth: 2, borderTopColor: colors.accent + '35', paddingHorizontal: 16, paddingVertical: 14 }}>
+          <View style={{
+            height: 10,
+            borderRadius: t.radii.full,
+            backgroundColor: colors.accent,
+            marginBottom: 16,
+          }} />
+
+          <Text style={{ fontFamily: t.fonts.display, fontSize: 15, color: colors.accent, marginBottom: 10 }}>
+            Ruta al trabajo
+          </Text>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}>
+            <View style={{ width: 14, height: 14, borderRadius: 7, backgroundColor: colors.accent, borderWidth: 2, borderColor: '#2D7E36' }} />
+            <View style={{ flex: 1, height: 5, backgroundColor: colors.accent, borderRadius: t.radii.full, marginHorizontal: 10, position: 'relative' }}>
+              <View style={{
+                position: 'absolute',
+                left: '46%',
+                top: -6,
+                width: 22,
+                height: 22,
+                borderRadius: 11,
+                backgroundColor: '#F4FBF3',
+                borderWidth: 2.5,
+                borderColor: '#2D7E36',
+              }} />
+            </View>
+            <View style={{ width: 14, height: 14, borderRadius: 3, backgroundColor: '#F05A4A', borderWidth: 2, borderColor: '#D83428' }} />
+          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <View style={{
+              width: 18,
+              height: 18,
+              borderRadius: 9,
+              backgroundColor: '#05C200',
+              borderWidth: 1.5,
+              borderColor: '#0F930F',
+              marginRight: 8,
+            }} />
+            <Text style={{ fontFamily: t.fonts.display, fontSize: 13, color: colors.accent, flex: 1 }}>
+              {TRAFFIC_ROUTE_PREVIEW.status}
+            </Text>
+          </View>
+
+          <Text style={{ fontFamily: t.fonts.body, fontSize: 12, color: '#66788B' }}>
+            {TRAFFIC_ROUTE_PREVIEW.leaveAt}
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={{ backgroundColor: colors.bg, borderTopWidth: 2, borderTopColor: colors.accent + '30', padding: 14, paddingHorizontal: 16 }}>
+        <Text style={{ fontFamily: t.fonts.display, fontSize: 13, color: colors.accent, marginBottom: 4 }}>
+          {action.simTitle}
+        </Text>
+        <Text style={{ fontFamily: t.fonts.body, fontSize: 12, color: t.colors.textSecondary }}>
+          {action.simDetail}
+        </Text>
+      </View>
+    );
   };
 
   return (
@@ -140,56 +212,79 @@ export default function GoodMorningScreen() {
                 const c = ACTION_COLORS[action.id] || { bg: t.colors.surfaceAlt, accent: t.colors.accent };
 
                 return (
-                  <TouchableOpacity
-                    key={action.id}
-                    onPress={() => toggleAction(action.id)}
-                    activeOpacity={0.8}
-                    style={{
-                      backgroundColor: t.colors.surface,
-                      borderRadius: t.radii.md,
-                      borderWidth: 3, borderColor: t.colors.text,
-                      shadowColor: isRevealed ? 'transparent' : t.colors.text,
-                      shadowOffset: { width: 4, height: 4 },
-                      shadowOpacity: isRevealed ? 0 : 1,
-                      shadowRadius: 0, elevation: isRevealed ? 0 : 4,
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 14, paddingHorizontal: 16 }}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                        <View style={{
-                          width: 40, height: 40, borderRadius: 12,
-                          backgroundColor: c.bg,
-                          borderWidth: 2, borderColor: c.accent + '60',
-                          alignItems: 'center', justifyContent: 'center',
-                        }}>
-                          <Text style={{ fontSize: 20 }}>{action.icon}</Text>
-                        </View>
-                        <View>
-                          <Text style={{ fontFamily: t.fonts.display, fontSize: 14, color: t.colors.text }}>{action.label}</Text>
-                          <Text style={{ fontFamily: t.fonts.body, fontSize: 11, color: t.colors.textSecondary }}>{action.description}</Text>
-                        </View>
-                      </View>
+                  <View key={action.id} style={{ marginRight: 4, marginBottom: 4 }}>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: 4,
+                        left: 4,
+                        right: -4,
+                        bottom: -4,
+                        borderRadius: t.radii.md,
+                        backgroundColor: t.colors.text,
+                      }}
+                    />
+                    <TouchableOpacity
+                      onPress={() => toggleAction(action.id)}
+                      activeOpacity={0.8}
+                      style={{
+                        backgroundColor: action.id === 'work_route' && isRevealed ? '#F5F5F5' : t.colors.surface,
+                        borderRadius: t.radii.md,
+                        borderWidth: 3, borderColor: t.colors.text,
+                        overflow: 'hidden',
+                      }}
+                    >
                       <View style={{
-                        width: 30, height: 30, borderRadius: 10,
-                        backgroundColor: isRevealed ? c.accent : c.bg,
-                        borderWidth: 2, borderColor: isRevealed ? c.accent : c.accent + '40',
-                        alignItems: 'center', justifyContent: 'center',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: 14,
+                        paddingHorizontal: 16,
+                        paddingVertical: 14,
                       }}>
-                        <Text style={{ color: isRevealed ? '#fff' : c.accent, fontFamily: t.fonts.display, fontSize: 14 }}>▸</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
+                          <View style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 12,
+                            backgroundColor: c.bg,
+                            borderWidth: 2, borderColor: c.accent + '60',
+                            alignItems: 'center', justifyContent: 'center',
+                          }}>
+                            <Text style={{ fontSize: 20 }}>{action.icon}</Text>
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={{ fontFamily: t.fonts.display, fontSize: 14, color: t.colors.text }}>
+                              {action.label}
+                            </Text>
+                            <Text style={{ fontFamily: t.fonts.body, fontSize: 11, color: t.colors.textSecondary }}>
+                              {action.description}
+                            </Text>
+                          </View>
+                        </View>
+                        <View style={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: 10,
+                          backgroundColor: action.id === 'work_route' ? '#E1F0E0' : isRevealed ? c.accent : c.bg,
+                          borderWidth: 2,
+                          borderColor: action.id === 'work_route' ? c.accent + '50' : isRevealed ? c.accent : c.accent + '40',
+                          alignItems: 'center', justifyContent: 'center',
+                          marginLeft: 12,
+                        }}>
+                          <Text style={{
+                            color: action.id === 'work_route' ? '#333' : isRevealed ? '#fff' : c.accent,
+                            fontFamily: t.fonts.display,
+                            fontSize: 14,
+                            transform: [{ rotate: action.id === 'work_route' ? (isRevealed ? '0deg' : '-90deg') : (isRevealed ? '90deg' : '0deg') }],
+                          }}>
+                            ▾
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                    {isRevealed && (
-                      <View style={{ backgroundColor: c.bg, borderTopWidth: 2, borderTopColor: c.accent + '30', padding: 14, paddingHorizontal: 16 }}>
-                        <Text style={{ fontFamily: t.fonts.display, fontSize: 13, color: c.accent, marginBottom: 4 }}>
-                          {action.simTitle}
-                        </Text>
-                        <Text style={{ fontFamily: t.fonts.body, fontSize: 12, color: t.colors.textSecondary }}>
-                          {action.simDetail}
-                        </Text>
-                      </View>
-                    )}
-                  </TouchableOpacity>
+                      {isRevealed && renderActionDetails(action, c)}
+                    </TouchableOpacity>
+                  </View>
                 );
               })}
             </View>

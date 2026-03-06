@@ -38,9 +38,9 @@ export const ALARM_COLORS = [
 ];
 
 export const GOOD_MORNING_ACTIONS = [
-  { id: 'work_route', label: 'Ruta al trabajo', icon: '🗺️', description: 'Ver tráfico y ruta', simTitle: 'Ruta al trabajo', simDetail: '25 min — Tráfico leve' },
+  { id: 'work_route', label: 'Trafico al trabajo', icon: '🗺️', description: 'Mira el tiempo que toma llegar al trabajo', simTitle: 'Ruta al trabajo', simDetail: '25 min — Tráfico leve' },
   { id: 'open_app', label: 'Abrir app', icon: '📱', description: 'Abrir una app favorita', simTitle: 'Abriendo Spotify', simDetail: 'Tu mezcla diaria está lista' },
-  { id: 'calendar', label: 'Calendario', icon: '📅', description: 'Ver agenda de hoy', simTitle: 'Agenda de hoy', simDetail: '3 eventos — primero a las 9:00 AM' },
+  { id: 'calendar', label: 'Calendario', icon: '📅', description: 'Mira tus eventos de hoy', simTitle: 'Agenda de hoy', simDetail: '3 eventos — primero a las 9:00 AM' },
 ];
 
 const SNOOZE_OPTIONS = [5, 10, 15];
