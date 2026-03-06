@@ -1,97 +1,135 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# AlarmApp
 
-# Getting Started
+Aplicacion movil de alarmas construida con React Native para Android. El proyecto incluye flujo de autenticacion, gestion de alarmas, configuracion de proposito al despertar, pantallas de sueno, herramientas de enfoque y una experiencia de rutina matutina.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Descripcion
 
-## Step 1: Start Metro
+AlarmApp busca ir mas alla de una alarma basica. La aplicacion permite crear alarmas con prioridad, tonos, colores y acciones asociadas, y organiza la experiencia alrededor de distintas pantallas para acompanar el momento de dormir, despertar y comenzar el dia.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Caracteristicas
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- Flujo de autenticacion con pantallas de login, registro y verificacion por codigo.
+- Creacion y edicion de alarmas con prioridad, color, tono y acciones configurables.
+- Pantalla principal con listado de alarmas y control de activacion.
+- Seccion de sueno para acompanar la rutina nocturna.
+- Seccion de morning routine con experiencias posteriores al despertar.
+- Herramientas adicionales como focus mode y otras utilidades.
+- Contexto global para el estado de alarmas.
+- Registro de eventos relacionados con snooze y cumplimiento usando store en la nube.
+
+## Stack Tecnologico
+
+- React Native 0.84.1
+- React 19.2.3
+- React Navigation
+- react-native-screens
+- react-native-safe-area-context
+- Jest
+- ESLint
+- TypeScript configurado en el proyecto
+
+## Requisitos Minimos
+
+Para correr el proyecto en Android necesitas como minimo:
+
+- Node.js 22.11.0 o superior
+- npm instalado
+- JDK 17
+- Android Studio instalado
+- Android SDK configurado
+- Android SDK Platform-Tools
+- Un emulador Android o un dispositivo fisico con depuracion USB habilitada
+
+## Configuracion del entorno
+
+Antes de ejecutar la app, verifica que React Native para Android este correctamente configurado en tu maquina.
+
+Variables de entorno recomendadas en macOS:
 
 ```sh
-# Using npm
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+```
+## Instalacion
+
+Desde la raiz del proyecto:
+
+```sh
+npm install
+```
+
+## Como correr el proyecto
+
+### 1. Iniciar Metro
+
+En una terminal, desde la raiz del proyecto:
+
+```sh
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+### 2. Iniciar Android
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+En otra terminal, desde la raiz del proyecto:
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
+Esto compila la aplicacion e instala la app en un emulador Android abierto o en un dispositivo conectado.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### 3. Verificar dispositivos disponibles
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Si Android no detecta el emulador o el dispositivo, puedes validar la conexion con:
 
 ```sh
-bundle install
+adb devices
 ```
 
-Then, and every time you update your native dependencies, run:
+## Scripts Disponibles
 
-```sh
-bundle exec pod install
+- `npm start`: inicia el servidor Metro.
+- `npm run android`: compila y ejecuta la app en Android.
+- `npm test`: ejecuta los tests con Jest.
+- `npm run lint`: ejecuta ESLint sobre el proyecto.
+
+## Estructura del proyecto
+
+```text
+AlarmApp/
+├── App.jsx
+├── index.js
+├── src/
+│   ├── AlarmContext.js
+│   ├── components/
+│   ├── navigation/
+│   │   └── AppNavigator.jsx
+│   ├── screens/
+│   │   ├── MainScreen.jsx
+│   │   ├── auth/
+│   │   └── main/
+│   └── stores/
+├── android/
+└── __tests__/
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### Organizacion principal
 
-```sh
-# Using npm
-npm run ios
+- `App.jsx`: punto de entrada principal de la app.
+- `src/navigation/AppNavigator.jsx`: define la navegacion principal entre login, registro, verificacion y flujo principal.
+- `src/screens/auth/`: pantallas del flujo de autenticacion.
+- `src/screens/main/`: pantallas principales de alarmas, sueno, morning flow, tools y experiencias relacionadas.
+- `src/components/`: componentes reutilizables de UI.
+- `src/AlarmContext.js`: manejo del estado global relacionado con alarmas y navegacion interna.
+- `src/stores/`: stores compartidas.
 
-# OR using Yarn
-yarn ios
-```
+## Flujo funcional de la app
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+De forma general, la app sigue este flujo:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+1. El usuario entra por autenticacion.
+2. Accede al contenedor principal de la aplicacion.
+3. Administra alarmas desde Home.
+4. Navega entre tabs de sueno, morning y tools.
+5. Configura experiencias complementarias como proposito, snooze, alarma activa, feedback y good morning.
