@@ -2,9 +2,15 @@
 
 Aplicacion movil de alarmas construida con React Native para Android. El proyecto incluye flujo de autenticacion, gestion de alarmas, configuracion de proposito al despertar, pantallas de sueno, herramientas de enfoque y una experiencia de rutina matutina.
 
-## Descripcion
 
-AlarmApp busca ir mas alla de una alarma basica. La aplicacion permite crear alarmas con prioridad, tonos, colores y acciones asociadas, y organiza la experiencia alrededor de distintas pantallas para acompanar el momento de dormir, despertar y comenzar el dia.
+## Autores
+
+| Nombre | Email |
+|---|---|
+| Yesdi Marin | y.marinr@uniandes.edu.co |
+| Alejandro Forero | ja.forerog1@uniandes.edu.co |
+
+---
 
 ## Caracteristicas
 
