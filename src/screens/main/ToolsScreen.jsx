@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, ScrollView, Alert } from 'react-native';
 import { useAlarm, SCREENS } from '../../AlarmContext';
 import t from '../../theme';
@@ -6,7 +7,8 @@ import FeatureCard from '../../components/FeatureCard';
 import ChunkyButton from '../../components/ChunkyButton';
 
 export default function ToolsScreen() {
-  const { focusModeEnabled, setFocusModeEnabled, navigate, onLogout } = useAlarm();
+  const { focusModeEnabled, navigate, onLogout } = useAlarm();
+  const [focusModeEnabledPreview, setFocusModeEnabledPreview] = useState(focusModeEnabled);
 
   const handleLogout = () => {
     Alert.alert(
@@ -36,11 +38,11 @@ export default function ToolsScreen() {
           <FeatureCard
             icon="🎯"
             title="Modo Enfoque"
-            subtitle={focusModeEnabled ? 'Bloqueando distracciones' : 'Apagado — bloquea apps durante el sueño'}
+            subtitle={focusModeEnabledPreview ? 'Bloqueando distracciones' : 'Apagado — bloquea apps durante el sueño'}
             color={t.colors.accent}
             onPress={() => navigate(SCREENS.EXTRAS_FOCUS)}
-            enabled={focusModeEnabled}
-            onToggle={() => setFocusModeEnabled(!focusModeEnabled)}
+            enabled={focusModeEnabledPreview}
+            onToggle={() => setFocusModeEnabledPreview(!focusModeEnabledPreview)}
           />
         </View>
 

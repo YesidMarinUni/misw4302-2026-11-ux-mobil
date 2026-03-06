@@ -4,7 +4,6 @@ import { addSnoozeEvent, addComplianceEvent } from './stores/cloudStore';
 export const SCREENS = {
   HOME: 'home',
   CREATE_EDIT: 'create_edit',
-  PURPOSE_EDITOR: 'purpose_editor',
   ALARM_RINGING: 'alarm_ringing',
   SNOOZE_PICKER: 'snooze_picker',
   FEEDBACK: 'feedback',
@@ -42,17 +41,6 @@ export const GOOD_MORNING_ACTIONS = [
   { id: 'work_route', label: 'Ruta al trabajo', icon: '🗺️', description: 'Ver tráfico y ruta', simTitle: 'Ruta al trabajo', simDetail: '25 min — Tráfico leve' },
   { id: 'open_app', label: 'Abrir app', icon: '📱', description: 'Abrir una app favorita', simTitle: 'Abriendo Spotify', simDetail: 'Tu mezcla diaria está lista' },
   { id: 'calendar', label: 'Calendario', icon: '📅', description: 'Ver agenda de hoy', simTitle: 'Agenda de hoy', simDetail: '3 eventos — primero a las 9:00 AM' },
-];
-
-const PURPOSE_TEMPLATES = [
-  { id: 't1', emoji: '🧘', text: 'Empieza con calma — respira y estírate antes que nada.' },
-  { id: 't2', emoji: '💧', text: 'Hidratate primero. Un vaso de agua antes de ver pantallas.' },
-  { id: 't3', emoji: '🌅', text: 'Observa la luz de la mañana. Sin teléfono por 10 minutos.' },
-  { id: 't4', emoji: '📝', text: 'Escribe una cosa por la que estés agradecido hoy.' },
-  { id: 't5', emoji: '🏃', text: 'Mueve tu cuerpo. Una caminata corta o estiramientos.' },
-  { id: 't6', emoji: '☕', text: 'Prepara tu bebida mañanera favorita con atención plena.' },
-  { id: 't7', emoji: '🎵', text: 'Escucha algo que eleve tu ánimo.' },
-  { id: 't8', emoji: '🧠', text: 'Establece una intención clara para hoy.' },
 ];
 
 const SNOOZE_OPTIONS = [5, 10, 15];
@@ -122,26 +110,8 @@ export function AlarmProvider({ children, onLogout }) {
     navigate(SCREENS.CREATE_EDIT);
   }, [navigate]);
 
-  const saveAlarm = useCallback(() => {
-    if (!editingAlarm) return;
-    setAlarms(prev => {
-      const exists = prev.find(a => a.id === editingAlarm.id);
-      return exists ? prev.map(a => a.id === editingAlarm.id ? editingAlarm : a) : [...prev, editingAlarm];
-    });
-    setEditingAlarm(null);
-    goHome();
-  }, [editingAlarm, goHome]);
-
-  const deleteAlarm = useCallback((id) => {
-    setAlarms(prev => prev.filter(a => a.id !== id));
-  }, []);
-
   const toggleAlarm = useCallback((id) => {
     setAlarms(prev => prev.map(a => a.id === id ? { ...a, enabled: !a.enabled } : a));
-  }, []);
-
-  const updateEditingAlarm = useCallback((updates) => {
-    setEditingAlarm(prev => ({ ...prev, ...updates }));
   }, []);
 
   const simulateAlarm = useCallback((alarm) => {
@@ -199,12 +169,6 @@ export function AlarmProvider({ children, onLogout }) {
     setTimeout(() => goHome(), 2000);
   }, [navigate, goHome]);
 
-  const openPurposeEditor = useCallback(() => { navigate(SCREENS.PURPOSE_EDITOR); }, [navigate]);
-  const savePurpose = useCallback((purpose) => {
-    setEditingAlarm(prev => ({ ...prev, purpose }));
-    goBack();
-  }, [goBack]);
-
   const navigateSleep = useCallback(() => { setScreenHistory([]); setScreen(SCREENS.TAB_SLEEP); }, []);
   const navigateMorning = useCallback(() => { setScreenHistory([]); setScreen(SCREENS.TAB_MORNING); }, []);
   const navigateTools = useCallback(() => { setScreenHistory([]); setScreen(SCREENS.TAB_TOOLS); }, []);
@@ -218,7 +182,6 @@ export function AlarmProvider({ children, onLogout }) {
     notificationsEnabled,
     fadeProgress,
     PROGRESSIVE_OPTIONS,
-    PURPOSE_TEMPLATES,
     SNOOZE_OPTIONS,
     BEDTIME_SNOOZE_OPTIONS,
     navigate,
@@ -226,10 +189,7 @@ export function AlarmProvider({ children, onLogout }) {
     goHome,
     createNewAlarm,
     editAlarm,
-    saveAlarm,
-    deleteAlarm,
     toggleAlarm,
-    updateEditingAlarm,
     simulateAlarm,
     dismissAlarm,
     snoozeAlarm,
@@ -237,8 +197,6 @@ export function AlarmProvider({ children, onLogout }) {
     bedtimeSnooze,
     bedtimeSleep,
     bedtimeDisable,
-    openPurposeEditor,
-    savePurpose,
     setNotificationsEnabled,
     navigateSleep,
     navigateMorning,

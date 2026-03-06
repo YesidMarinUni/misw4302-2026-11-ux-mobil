@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useAlarm } from '../../AlarmContext';
 import t from '../../theme';
@@ -5,7 +6,8 @@ import TabHeader from '../../components/TabHeader';
 import FeatureCard from '../../components/FeatureCard';
 
 export default function MorningScreen() {
-  const { briefingEnabled, setBriefingEnabled } = useAlarm();
+  const { briefingEnabled } = useAlarm();
+  const [briefingEnabledPreview, setBriefingEnabledPreview] = useState(briefingEnabled);
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.bg }}>
@@ -32,11 +34,11 @@ export default function MorningScreen() {
           <FeatureCard
             icon="🎙️"
             title="Resumen de audio de la mañana"
-            subtitle={briefingEnabled ? 'Activo — agenda, clima y más' : 'Apagado — resumen de audio mañanero'}
+            subtitle={briefingEnabledPreview ? 'Activo — agenda, clima y más' : 'Apagado — resumen de audio mañanero'}
             color={t.colors.purple}
             onPress={() => {}}
-            enabled={briefingEnabled}
-            onToggle={() => setBriefingEnabled(!briefingEnabled)}
+            enabled={briefingEnabledPreview}
+            onToggle={() => setBriefingEnabledPreview(!briefingEnabledPreview)}
           />
 
           <FeatureCard

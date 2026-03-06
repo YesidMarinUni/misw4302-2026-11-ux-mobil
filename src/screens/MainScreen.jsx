@@ -8,7 +8,6 @@ import SleepScreen from './main/SleepScreen';
 import MorningScreen from './main/MorningScreen';
 import ToolsScreen from './main/ToolsScreen';
 import CreateEditScreen from './main/CreateEditScreen';
-import PurposeEditorScreen from './main/PurposeEditorScreen';
 import AlarmRingingScreen from './main/AlarmRingingScreen';
 import SnoozePickerScreen from './main/SnoozePickerScreen';
 import FeedbackScreen from './main/FeedbackScreen';
@@ -45,7 +44,6 @@ function AppContent() {
       case SCREENS.TAB_MORNING: return <MorningScreen />;
       case SCREENS.TAB_TOOLS: return <ToolsScreen />;
       case SCREENS.CREATE_EDIT: return <CreateEditScreen />;
-      case SCREENS.PURPOSE_EDITOR: return <PurposeEditorScreen />;
       case SCREENS.ALARM_RINGING: return <AlarmRingingScreen />;
       case SCREENS.SNOOZE_PICKER: return <SnoozePickerScreen />;
       case SCREENS.FEEDBACK: return <FeedbackScreen />;

@@ -76,7 +76,6 @@ const BEDTIME_SNOOZE_OPTIONS = [15, 30, 60];
 export const SCREENS = {
   HOME: 'home',
   CREATE_EDIT: 'create_edit',
-  PURPOSE_EDITOR: 'purpose_editor',
   ALARM_RINGING: 'alarm_ringing',
   SNOOZE_PICKER: 'snooze_picker',
   FEEDBACK: 'feedback',
@@ -308,10 +307,6 @@ export function useAlarmState() {
     setTimeout(() => goHome(), 2000);
   }, [navigate, goHome]);
 
-  const openPurposeEditor = useCallback(() => {
-    navigate(SCREENS.PURPOSE_EDITOR);
-  }, [navigate]);
-
   const savePurpose = useCallback((purpose) => {
     setEditingAlarm(prev => ({ ...prev, purpose }));
     goBack();
@@ -364,7 +359,6 @@ export function useAlarmState() {
     bedtimeSnooze,
     bedtimeSleep,
     bedtimeDisable,
-    openPurposeEditor,
     savePurpose,
     updateEditingAlarm,
     setNotificationsEnabled,

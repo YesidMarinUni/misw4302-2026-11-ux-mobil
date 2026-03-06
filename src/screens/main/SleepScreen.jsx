@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useAlarm } from '../../AlarmContext';
 import t from '../../theme';
@@ -5,7 +6,8 @@ import TabHeader from '../../components/TabHeader';
 import FeatureCard from '../../components/FeatureCard';
 
 export default function SleepScreen() {
-  const { bedtimeEnabled, setBedtimeEnabled } = useAlarm();
+  const { bedtimeEnabled } = useAlarm();
+  const [bedtimeEnabledPreview, setBedtimeEnabledPreview] = useState(bedtimeEnabled);
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.bg }}>
@@ -24,11 +26,11 @@ export default function SleepScreen() {
           <FeatureCard
             icon="🌙"
             title="Recordatorio nocturno"
-            subtitle={bedtimeEnabled ? 'Activo — toca para configurar' : 'Apagado — toca para activar'}
+            subtitle={bedtimeEnabledPreview ? 'Activo — toca para configurar' : 'Apagado — toca para activar'}
             color="#1A1040"
             onPress={() => {}}
-            enabled={bedtimeEnabled}
-            onToggle={() => setBedtimeEnabled(!bedtimeEnabled)}
+            enabled={bedtimeEnabledPreview}
+            onToggle={() => setBedtimeEnabledPreview(!bedtimeEnabledPreview)}
           />
 
           <FeatureCard
